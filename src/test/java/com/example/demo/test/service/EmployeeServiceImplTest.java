@@ -1,6 +1,7 @@
 package com.example.demo.test.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.demo.model.Employee;
-import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.EmployeeServiceImpl;
 
@@ -37,7 +38,9 @@ public class EmployeeServiceImplTest {
     
     @Before
     public void setUp() {
-        Employee alex = new Employee("alex");
+        Employee alex = new Employee();
+        alex.setName("alex");
+        alex.setId(1l);
      
         Mockito.when(employeeRepository.findByName(alex.getName()))
           .thenReturn(alex);
@@ -48,8 +51,8 @@ public class EmployeeServiceImplTest {
         String name = "alex";
         Employee found = employeeService.getEmployeeByName(name);
       
-         assertThat(found.getName())
-          .isEqualTo(name);
+         assertEquals(found.getName(),"alex");
+         assertEquals(found.getId().longValue(),1);
      }
  
 }
